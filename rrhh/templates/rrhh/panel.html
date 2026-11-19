@@ -3,7 +3,7 @@
 <div class="wrap">
   {% if empleado %}
   <div class="card">
-    <h1 style="font-size:1.5rem;">Hola, {{ empleado.nombres }}</h1>
+    <h1 style="font-size:1.5rem;">Bienvenida/o, {{ empleado.nombres }} 👋</h1>
     <p style="color:var(--suave);font-size:0.88rem;margin-top:0.3rem;">
       {{ empleado.cargo }} · {{ empleado.area }} · Rol: {{ empleado.get_rol_display }}</p>
     <div style="display:flex;gap:2rem;margin-top:1rem;font-size:0.85rem;">

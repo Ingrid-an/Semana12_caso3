@@ -40,6 +40,14 @@ class EmpleadoForm(forms.ModelForm):
             raise forms.ValidationError("El cargo no puede estar vacío.")
         return cargo
 
+        def clean_nombres(self):
+        """Valida que los nombres solo tengan letras."""
+        import re
+        nombres = sanitize_input(self.cleaned_data.get("nombres"))
+        if not re.match(r"^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$", nombres):
+            raise forms.ValidationError("Los nombres solo deben contener letras.")
+        return nombres
+
     def clean_fecha_ingreso(self):
         fecha = self.cleaned_data.get("fecha_ingreso")
         if fecha and fecha > date.today():
