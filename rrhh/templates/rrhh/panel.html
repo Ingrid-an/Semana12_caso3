@@ -1,0 +1,66 @@
+{% extends "rrhh/base.html" %}
+{% block content %}
+<div class="wrap">
+  {% if empleado %}
+  <div class="card">
+    <h1 style="font-size:1.5rem;">Hola, {{ empleado.nombres }}</h1>
+    <p style="color:var(--suave);font-size:0.88rem;margin-top:0.3rem;">
+      {{ empleado.cargo }} · {{ empleado.area }} · Rol: {{ empleado.get_rol_display }}</p>
+    <div style="display:flex;gap:2rem;margin-top:1rem;font-size:0.85rem;">
+      <div><strong>Antigüedad:</strong> {{ empleado.antiguedad }}</div>
+      <div><strong>Vacaciones disponibles:</strong> {{ empleado.dias_vacaciones_disponibles }} días</div>
+    </div>
+  </div>
+
+  {% if pendientes %}
+  <div class="card">
+    <h2>Permisos pendientes de aprobación</h2>
+    <table>
+      <tr><th>Empleado</th><th>Tipo</th><th>Fechas</th><th>Días</th><th>Acción</th></tr>
+      {% for p in pendientes %}
+      <tr>
+        <td>{{ p.empleado.nombre_completo }}</td>
+        <td>{{ p.get_tipo_display }}</td>
+        <td>{{ p.fecha_inicio }} → {{ p.fecha_fin }}</td>
+        <td>{{ p.dias_solicitados }}</td>
+        <td>
+          <a href="{% url 'rrhh:aprobar' p.pk 'aprobar' %}" class="btn btn-sm btn-ok">Aprobar</a>
+          <a href="{% url 'rrhh:aprobar' p.pk 'rechazar' %}" class="btn btn-sm btn-err">Rechazar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  <div class="card">
+    <h2>Mis últimas asistencias</h2>
+    {% if mis_asistencias %}
+    <table>
+      <tr><th>Fecha</th><th>Entrada</th><th>Salida</th><th>Horas</th><th>Extras</th></tr>
+      {% for a in mis_asistencias %}
+      <tr><td>{{ a.fecha }}</td><td>{{ a.hora_entrada|time:"H:i" }}</td>
+          <td>{{ a.hora_salida|time:"H:i"|default:"—" }}</td>
+          <td>{{ a.horas_trabajadas }}</td><td>{{ a.horas_extras }}</td></tr>
+      {% endfor %}
+    </table>
+    {% else %}<p style="color:var(--suave);">Sin registros aún.</p>{% endif %}
+  </div>
+
+  <div class="card">
+    <h2>Mis permisos</h2>
+    {% if mis_permisos %}
+    <table>
+      <tr><th>Tipo</th><th>Fechas</th><th>Estado</th></tr>
+      {% for p in mis_permisos %}
+      <tr><td>{{ p.get_tipo_display }}</td><td>{{ p.fecha_inicio }} → {{ p.fecha_fin }}</td>
+          <td><span class="badge b-{{ p.estado }}">{{ p.get_estado_display }}</span></td></tr>
+      {% endfor %}
+    </table>
+    {% else %}<p style="color:var(--suave);">Sin permisos solicitados.</p>{% endif %}
+  </div>
+  {% else %}
+  <div class="card"><p>Tu usuario no tiene un empleado asociado. Contacta a RRHH.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

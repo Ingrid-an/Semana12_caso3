@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}TecnoAndes · RRHH{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--azul:#1b3a6b;--azul2:#2d5aa0;--celeste:#eaf1fa;--gris:#f4f6f9;--tinta:#1f2a3a;--suave:#64748b;--borde:#dce3ec;--ok:#16a34a;--err:#dc2626;--amar:#d97706;}
+    *{margin:0;padding:0;box-sizing:border-box;} body{font-family:"Inter",sans-serif;background:var(--gris);color:var(--tinta);}
+    header{background:var(--azul);color:#fff;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .logo{font-weight:700;font-size:1.2rem;letter-spacing:0.02em;} .logo span{color:#8fb4e6;}
+    nav a{color:#cdddf2;text-decoration:none;font-size:0.85rem;margin:0 0.6rem;} nav a:hover{color:#fff;}
+    .btn{display:inline-block;background:var(--azul2);color:#fff;padding:0.6rem 1.2rem;border:none;border-radius:6px;text-decoration:none;font-size:0.85rem;cursor:pointer;font-family:inherit;}
+    .btn:hover{background:#24487f;} .btn-sm{padding:0.35rem 0.8rem;font-size:0.78rem;}
+    .btn-ok{background:var(--ok);} .btn-err{background:var(--err);}
+    .wrap{max-width:1000px;margin:2rem auto;padding:0 1.5rem;}
+    .card{background:#fff;border:1px solid var(--borde);border-radius:10px;padding:1.5rem;margin-bottom:1.3rem;}
+    .msg{padding:0.8rem 1.2rem;margin:1rem auto;max-width:1000px;border-radius:6px;font-size:0.9rem;}
+    .msg.success{background:#dcfce7;color:#166534;} .msg.error{background:#fee2e2;color:#991b1b;} .msg.info{background:var(--celeste);color:var(--azul);}
+    table{width:100%;border-collapse:collapse;font-size:0.85rem;} th{background:var(--celeste);color:var(--azul);text-align:left;padding:0.6rem;} td{padding:0.55rem 0.6rem;border-bottom:1px solid var(--borde);}
+    .badge{padding:0.15rem 0.6rem;border-radius:999px;font-size:0.72rem;font-weight:600;}
+    .b-pendiente{background:#fef3c7;color:#92400e;} .b-aprobado{background:#dcfce7;color:#166534;} .b-rechazado{background:#fee2e2;color:#991b1b;}
+    h1,h2{color:var(--azul);} h2{font-size:1.2rem;margin-bottom:1rem;}
+    .vform p{margin-bottom:1rem;} .vform label{display:block;font-size:0.8rem;font-weight:600;color:var(--suave);margin-bottom:0.3rem;}
+    .vform input,.vform select,.vform textarea{width:100%;padding:0.6rem;border:1px solid var(--borde);border-radius:6px;font-family:inherit;font-size:0.9rem;}
+    .vform .errorlist{list-style:none;color:var(--err);font-size:0.8rem;margin-top:0.3rem;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Tecno<span>Andes</span> · RRHH</div>
+    <nav>
+      {% if user.is_authenticated %}
+        <a href="{% url 'rrhh:panel' %}">Panel</a>
+        <a href="{% url 'rrhh:asistencia' %}">Marcar asistencia</a>
+        <a href="{% url 'rrhh:permiso' %}">Solicitar permiso</a>
+        <a href="/admin/">Admin</a>
+        <a href="{% url 'rrhh:logout' %}" class="btn btn-sm">Salir</a>
+      {% endif %}
+    </nav>
+  </header>
+  {% if messages %}{% for m in messages %}<div class="msg {{ m.tags }}">{{ m }}</div>{% endfor %}{% endif %}
+  {% block content %}{% endblock %}
+</body>
+</html>

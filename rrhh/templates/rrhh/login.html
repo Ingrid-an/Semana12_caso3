@@ -1,0 +1,15 @@
+{% extends "rrhh/base.html" %}
+{% block content %}
+<div class="wrap" style="max-width:400px;">
+  <div class="card">
+    <h1 style="font-size:1.4rem;text-align:center;margin-bottom:0.3rem;">Control de Asistencia</h1>
+    <p style="text-align:center;color:var(--suave);font-size:0.85rem;margin-bottom:1.5rem;">TecnoAndes S.A.C.</p>
+    <form method="post" class="vform">
+      {% csrf_token %}
+      <p><label>Usuario (DNI)</label><input type="text" name="username" required></p>
+      <p><label>Contraseña</label><input type="password" name="password" required></p>
+      <button type="submit" class="btn" style="width:100%;">Ingresar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

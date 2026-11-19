@@ -1,0 +1,12 @@
+{% extends "rrhh/base.html" %}
+{% block content %}
+<div class="wrap" style="max-width:560px;">
+  <div class="card">
+    <h1 style="font-size:1.4rem;margin-bottom:1rem;">Marcar asistencia</h1>
+    {% if form.non_field_errors %}<div class="msg error" style="margin:0 0 1rem;">{{ form.non_field_errors }}</div>{% endif %}
+    <form method="post" class="vform">{% csrf_token %}{{ form.as_p }}
+      <button type="submit" class="btn" style="width:100%;">Registrar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
