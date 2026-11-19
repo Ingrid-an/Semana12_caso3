@@ -27,7 +27,13 @@ class AuditoriaMiddleware:
                 accion=f"POST {request.path}",
                 ruta=request.path,
             )
-            logger.info("[AUDITORÍA] %s modificó %s", request.user.username, request.path)
+
+            logger.info(
+                "[AUDITORÍA] Usuario '%s' modificó la ruta '%s' (método %s)",
+                request.user.username,
+                request.path,
+                request.method
+            )
 
         response["X-TecnoAndes-Audit"] = "activo"
         return response
